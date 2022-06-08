@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.atlas {
+  /* background-color: #110e13; */
+}
+
+body {
+  background-color: #eaeaea;
+}
