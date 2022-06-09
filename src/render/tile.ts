@@ -43,14 +43,14 @@ export async function renderTile(args: {
     return promise;
   }
   // draw background
-  ctx.save();
-  if (image) {
-  } else {
-    if (type) {
-      ctx.fillStyle = "#110e13";
-      ctx.fillRect(x - size - offset, y - size - offset, size, size);
-    }
-  }
+  // ctx.save();
+  // if (image) {
+  // } else {
+  //   if (type) {
+  //     ctx.fillStyle = "#110e13";
+  //     ctx.fillRect(x - size - offset, y - size - offset, size, size);
+  //   }
+  // }
 
   if (image) {
     const img = await loadImage();
@@ -101,5 +101,5 @@ export async function renderTile(args: {
       );
     }
   }
-  ctx.restore();
+  // ctx.restore();
 }

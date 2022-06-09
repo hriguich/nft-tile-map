@@ -144,7 +144,7 @@ const T = React.memo(() => {
       <div className="flex flex-col items-center ">
         <div
           className=" rounded-xl overflow-hidden drop-shadow-xl "
-          style={{ width: "85vw", height: "55vh" }}
+          style={{ width: "90vw", height: "65vh" }}
         >
           <TileMap
             className="atlas"
