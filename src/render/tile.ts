@@ -34,8 +34,6 @@ export async function renderTile(args: {
   const tileSize = scale ? size * scale : size * 1.01;
 
   function loadImage() {
-    console.log(image);
-
     let img = new Image();
     let promise = new Promise((resolve, reject) => {
       img.onload = () => resolve(img);

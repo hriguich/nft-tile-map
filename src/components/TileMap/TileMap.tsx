@@ -285,7 +285,6 @@ export class TileMap extends React.PureComponent<Props, State> {
               topSteps = topSteps + 1;
             } else {
               topSteps = topSteps;
-              console.log("top calculated", topSteps);
               isTop = false;
               break;
             }
@@ -302,7 +301,6 @@ export class TileMap extends React.PureComponent<Props, State> {
               bottomSteps = bottomSteps - 1;
             } else {
               bottomSteps = bottomSteps + 1;
-              console.log("bottom calculated", bottomSteps);
               isBottom = false;
               break;
             }
@@ -316,7 +314,6 @@ export class TileMap extends React.PureComponent<Props, State> {
               leftSteps = leftSteps - 1;
             } else {
               leftSteps = leftSteps;
-              console.log("left calculated", leftSteps);
               isLeft = false;
               break;
             }
@@ -330,7 +327,6 @@ export class TileMap extends React.PureComponent<Props, State> {
               rightSteps = rightSteps + 1;
             } else {
               rightSteps = rightSteps - 1;
-              console.log("Right calculated", rightSteps);
               isRight = false;
               break;
             }
