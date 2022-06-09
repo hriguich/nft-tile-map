@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TileMap, Layer, Coord } from "./index";
-import { Context } from "../context/context";
+import React, { useState } from "react";
+import { TileMap, Layer } from "./index";
 import { useRouter } from "../node_modules/next/router";
 
 const T = React.memo(() => {
