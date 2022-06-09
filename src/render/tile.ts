@@ -57,7 +57,7 @@ export async function renderTile(args: {
   if (image) {
     const img = await loadImage();
     ctx.drawImage(
-      img,
+      img as CanvasImageSource,
       x - tileSize - offset,
       y - tileSize - offset,
       tileSize + offset,

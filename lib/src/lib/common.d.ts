@@ -12,4 +12,6 @@ export declare type Tile = {
   owner?: string;
   type?: number;
   image?: string;
+  estateId?: string;
+  price?: number;
 };

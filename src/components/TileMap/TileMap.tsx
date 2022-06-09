@@ -259,7 +259,7 @@ export class TileMap extends React.PureComponent<Props, State> {
     return [coordX, coordY];
   }
 
-  handleClick = (event: MouseEvent) => {
+  handleClick = (event) => {
     const [x, y] = this.mouseToCoords(event.layerX, event.layerY);
     if (!this.inBounds(x, y)) {
       return;
@@ -361,7 +361,7 @@ export class TileMap extends React.PureComponent<Props, State> {
     }
   };
 
-  handleMouseDown = (event: MouseEvent) => {
+  handleMouseDown = (event) => {
     const { onMouseDown } = this.props;
     this.mousedownTimestamp = Date.now();
     if (onMouseDown) {
@@ -374,7 +374,7 @@ export class TileMap extends React.PureComponent<Props, State> {
     }
   };
 
-  handleMouseMove = (event: MouseEvent) => {
+  handleMouseMove = (event) => {
     const { layerX, layerY } = event;
     const [x, y] = this.mouseToCoords(layerX, layerY);
     if (!this.inBounds(x, y)) {

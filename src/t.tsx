@@ -5,27 +5,28 @@ import { useRouter } from "../node_modules/next/router";
 
 const T = React.memo(() => {
   const router = useRouter();
-  const [selectedTile, setSelectedTile] = useState([]);
+  const [selectedTile, setSelectedTile] = useState<SelectedTile>({
+    tiles: [],
+    tileInfo: {},
+  });
   const [hover, setHover] = useState({ x: 0, y: 0 });
-  const context = useContext(Context);
   const isPositive = (x: number, y: number) => x > 0 && y > 0;
+
   const positiveLayer: Layer = (x, y) => {
     return {
       color: isPositive(x, y) ? "#cccccc" : "#888888",
     };
   };
+
   const hoverLayer: Layer = (x, y) => {
     return hover.x === x && hover.y === y
       ? { color: isPositive(x, y) ? "#ff0000" : "#00ff00" }
       : null;
   };
 
-  type Popup = {
-    x: number;
-    y: number;
-    left?: number;
-    top?: number;
-    visible?: boolean;
+  type SelectedTile = {
+    tiles;
+    tileInfo;
   };
 
   type AtlasTile = {
@@ -110,7 +111,7 @@ const T = React.memo(() => {
     } else {
       return {
         color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[13] : COLOR_BY_TYPE[13],
-        type: "background",
+        type: 6,
       };
     }
   };
@@ -157,7 +158,7 @@ const T = React.memo(() => {
             ]}
             onClick={(tiles, tileInfo) => {
               if (isSelected(tiles[0].x, tiles[0].y)) {
-                setSelectedTile([]);
+                setSelectedTile({ tiles: [], tileInfo: {} });
               } else {
                 console.log(tileInfo);
                 setSelectedTile({ tiles, tileInfo });
