@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const urls = ["Executiveplot_2.glb"];
 
-function modelviewer() {
+function Modelviewer() {
   const router = useRouter();
   const [type, setType] = useState(null);
 
@@ -51,4 +51,4 @@ function modelviewer() {
   );
 }
 
-export default modelviewer;
+export default Modelviewer;
