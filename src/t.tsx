@@ -172,7 +172,18 @@ const T = React.memo(() => {
             {selectedTile?.tileInfo?.type ? (
               <div className="m-10 flex justify-between">
                 <div>
-                  <span className="flex space-x-2">
+                  <span className="text-xl font-semibolds">
+                    {selectedTile?.tiles.length === 1
+                      ? `Coords (${selectedTile?.tiles[0].x},${selectedTile?.tiles[0].y})`
+                      : `Coords (${selectedTile?.tiles[0].x},${
+                          selectedTile?.tiles[0].y
+                        }) : (${
+                          selectedTile?.tiles[selectedTile?.tiles.length - 1].x
+                        },${
+                          selectedTile?.tiles[selectedTile?.tiles.length - 1].y
+                        })`}
+                  </span>
+                  <span className="flex space-x-2 mt-5">
                     <h2 className="font-semibold">Type:</h2>
                     <p> {selectedTile?.tileInfo?.type}</p>
                   </span>
