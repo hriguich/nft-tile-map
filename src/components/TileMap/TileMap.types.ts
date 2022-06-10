@@ -39,6 +39,8 @@ export type Props = {
   isDraggable: boolean;
   /** amount of padding tiles */
   padding: number;
+  // array of square by type
+  SQUARE_BY_TYPE: any;
   /** callbacks */
   onMouseDown?: (x: number, y: number) => void;
   onMouseUp?: (x: number, y: number) => void;

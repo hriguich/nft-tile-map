@@ -16,4 +16,8 @@ export type Tile = {
   image?: string;
   estateId?: number;
   price?: number;
+  landId?: number;
+  zone?: number;
+  isHighTraffic?: boolean;
+  billboard?: string;
 };

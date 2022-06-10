@@ -526,33 +526,91 @@ export class TileMap extends React.PureComponent<Props, State> {
               left: this.state.popup?.left + 30,
             }}
           >
-            <div className="flex text-xs flex-col">
-              <div className="flex space-x-2">
-                <h2>Coords</h2>
-                <p>x: {this.state.popup?.x}</p>
-                <p>y: {this.state.popup?.y}</p>
-              </div>
-              <div className="flex">
-                <h2>Estate </h2>
-                <p>
-                  {` : `}
-                  {
-                    this.props.layers[0](
+            <div className="flex space-x-2 mb-2">
+              <h2>Coords</h2>
+              <p>x: {this.state.popup?.x}</p>
+              <p>y: {this.state.popup?.y}</p>
+            </div>
+            <div className="flex space-x-6">
+              <div className="flex text-xs flex-col">
+                <div className="flex">
+                  <h2>Land id </h2>
+                  <p>
+                    {` : `}
+                    {
+                      this.props.layers[0](
+                        this.state.popup?.x,
+                        this.state.popup?.y
+                      ).landId
+                    }
+                  </p>
+                </div>
+                <div className="flex">
+                  <h2>Owner </h2>
+                  <p>
+                    {` : `}
+                    {this.props.layers[0](
                       this.state.popup?.x,
                       this.state.popup?.y
-                    ).estateId
-                  }
-                </p>
+                    ).owner.substring(0, 6)}
+                  </p>
+                </div>
+
+                <div className="flex mt-3">
+                  <p>
+                    {this.props.layers[0](
+                      this.state.popup?.x,
+                      this.state.popup?.y
+                    ).isHighTraffic ? (
+                      <p className="text-red-800 font-semibold text-sm">
+                        High traffic Area
+                      </p>
+                    ) : (
+                      <p className="text-green-800 font-semibold text-sm">
+                        {" "}
+                        Low traffic area
+                      </p>
+                    )}
+                  </p>
+                </div>
               </div>
-              <div className="flex">
-                <h2>Owner </h2>
-                <p>
-                  {` : `}
-                  {this.props.layers[0](
-                    this.state.popup?.x,
-                    this.state.popup?.y
-                  ).owner.substring(0, 6)}
-                </p>
+              <div className="flex text-xs flex-col">
+                <div className="flex ">
+                  <h2>Square meters </h2>
+                  <p>
+                    {` : `}
+                    {
+                      this.props.SQUARE_BY_TYPE[
+                        this.props.layers[0](
+                          this.state.popup?.x,
+                          this.state.popup?.y
+                        ).type
+                      ]
+                    }
+                  </p>
+                </div>
+                <div className="flex ">
+                  <h2>Zone </h2>
+                  <p>
+                    {` : `}
+                    {
+                      this.props.layers[0](
+                        this.state.popup?.x,
+                        this.state.popup?.y
+                      ).zone
+                    }
+                  </p>
+                </div>
+                <div className="flex">
+                  <p>
+                    {
+                      this.props.layers[0](
+                        this.state.popup?.x,
+                        this.state.popup?.y
+                      ).billboard
+                    }
+                  </p>
+                </div>
               </div>
             </div>
           </div>

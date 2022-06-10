@@ -8,20 +8,20 @@ const T = React.memo(() => {
     tiles: [],
     tileInfo: {},
   });
-  const [hover, setHover] = useState({ x: 0, y: 0 });
-  const isPositive = (x: number, y: number) => x > 0 && y > 0;
+  // const [hover, setHover] = useState({ x: 0, y: 0 });
+  // const isPositive = (x: number, y: number) => x > 0 && y > 0;
 
-  const positiveLayer: Layer = (x, y) => {
-    return {
-      color: isPositive(x, y) ? "#cccccc" : "#888888",
-    };
-  };
+  // // const positiveLayer: Layer = (x, y) => {
+  // //   return {
+  // //     color: isPositive(x, y) ? "#cccccc" : "#888888",
+  // //   };
+  // // };
 
-  const hoverLayer: Layer = (x, y) => {
-    return hover.x === x && hover.y === y
-      ? { color: isPositive(x, y) ? "#ff0000" : "#00ff00" }
-      : null;
-  };
+  // // const hoverLayer: Layer = (x, y) => {
+  // //   return hover.x === x && hover.y === y
+  // //     ? { color: isPositive(x, y) ? "#ff0000" : "#00ff00" }
+  // //     : null;
+  // // };
 
   type SelectedTile = {
     tiles;
@@ -40,6 +40,10 @@ const T = React.memo(() => {
     price?: number;
     owner?: string;
     image?: string;
+    landId?: number;
+    zone?: number;
+    isHighTraffic?: boolean;
+    billboard?: string;
   };
 
   let atlas: Record<string, AtlasTile> | null = null;
@@ -55,17 +59,35 @@ const T = React.memo(() => {
 
   const COLOR_BY_TYPE = Object.freeze({
     0: "#ff9990", // my parcels
-    1: "#ff4053", // my parcels on sale
-    2: "#ff9990", // my estates
-    3: "#ff4053", // my estates on sale
-    4: "#ffbd33", // parcels/estates where I have permissions
     5: "#5054D4", // districts
     6: "#563db8", // contributions
     7: "#716C7A", // roads
     8: "#FF2E63", // plazas
     9: "#252A34", // owned parcel/estate
     10: "#3D3A46", // parcels on sale (we show them as owned parcels)
-    11: "#09080A", // unowned pacel/estate
+    12: "#18141a", // background
+    13: "#110e13", // loading odd
+    14: "#0d0b0e", // loading even
+  });
+
+  const STRING_TYPE = Object.freeze({
+    0: "villa", // my parcels
+    5: "villa", // villa
+    6: "standard", // contributions
+    7: "roads", // roads
+    8: "exclusive", // exclusive
+    9: "standard", // standard
+    10: "deluxe", // deluxe
+  });
+
+  const SQUARE_BY_TYPE = Object.freeze({
+    0: "#ff9990", // my parcels
+    5: 13456, // villa
+    6: "#563db8", // contributions
+    7: "#716C7A", // roads
+    8: 30625, // exclusive
+    9: 729, // standard
+    10: 4356, // deluxe
     12: "#18141a", // background
     13: "#110e13", // loading odd
     14: "#0d0b0e", // loading even
@@ -95,6 +117,10 @@ const T = React.memo(() => {
       const estateId = tile.estate_id;
       const image = tile.image;
       const price = tile.price;
+      const landId = tile.landId;
+      const zone = tile.zone;
+      const isHighTraffic = tile.isHighTraffic;
+      const billboard = tile.billboard;
 
       return {
         color,
@@ -106,6 +132,10 @@ const T = React.memo(() => {
         estateId,
         image,
         price,
+        landId,
+        zone,
+        isHighTraffic,
+        billboard,
       };
     } else {
       return {
@@ -165,6 +195,7 @@ const T = React.memo(() => {
             }}
             // onHover={(x, y) => setHover({ x, y })}
             onPopup={(state) => {}}
+            SQUARE_BY_TYPE={SQUARE_BY_TYPE}
           />
         </div>
         <div className="flex w-[85vw] ">
@@ -184,13 +215,42 @@ const T = React.memo(() => {
                         })`}
                   </span>
                   <span className="flex space-x-2 mt-5">
-                    <h2 className="font-semibold">Type:</h2>
-                    <p> {selectedTile?.tileInfo?.type}</p>
+                    <h2 className="font-semibold">Land id:</h2>
+
+                    <p> {selectedTile?.tileInfo?.landId}</p>
                   </span>
                   <span className="flex space-x-2">
                     <h2 className="font-semibold">owner:</h2>
 
                     <p> {selectedTile?.tileInfo?.owner}</p>
+                  </span>
+                  <span className="flex space-x-2 ">
+                    <h2 className="font-semibold">Type:</h2>
+                    <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
+                  </span>
+                  <span className="flex space-x-2 ">
+                    <h2 className="font-semibold">Square meters:</h2>
+                    <p> {SQUARE_BY_TYPE[selectedTile?.tileInfo?.type]}</p>
+                  </span>
+                  <span className="flex space-x-2 ">
+                    <h2 className="font-semibold">Zone:</h2>
+                    <p> {selectedTile?.tileInfo?.zone}</p>
+                  </span>
+                  <span className="flex space-x-2 ">
+                    <h2 className="font-semibold">Billboard:</h2>
+                    <p> {selectedTile?.tileInfo?.billboard}</p>
+                  </span>
+                  <span className="flex space-x-2 mt-5 ">
+                    {selectedTile?.tileInfo?.isHighTraffic ? (
+                      <p className="text-red-800 font-semibold">
+                        High traffic Area
+                      </p>
+                    ) : (
+                      <p className="text-green-800 font-semibold">
+                        {" "}
+                        Low traffic area
+                      </p>
+                    )}
                   </span>
                 </div>
                 <div>
