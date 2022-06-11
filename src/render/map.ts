@@ -17,6 +17,7 @@ export function renderMap(args: {
   ctx.clearRect(0, 0, width, height);
   const halfWidth = width / 2;
   const halfHeight = height / 2;
+
   for (const layer of layers) {
     for (let x = nw.x; x < se.x; x++) {
       for (let y = se.y; y < nw.y; y++) {
@@ -27,7 +28,15 @@ export function renderMap(args: {
         if (!tile) {
           continue;
         }
-        const { color, top, left, topLeft, scale, image, type } = tile;
+
+        const { color, top, left, topLeft, scale, image, type, owner } = tile;
+        let i;
+        if (image) {
+          const tile_sheet = new Image();
+
+          tile_sheet.src = image;
+          i = tile_sheet;
+        }
 
         const halfSize = scale ? (size * scale) / 2 : size / 2;
 
@@ -36,7 +45,7 @@ export function renderMap(args: {
           x: halfWidth - offsetX + halfSize,
           y: halfHeight - offsetY + halfSize,
           size,
-          padding: size < 7 ? 0.5 : size < 12 ? 1 : size < 18 ? 1.5 : 2,
+          padding: size < 7 ? 1 : size < 12 ? 1.5 : size < 18 ? 2 : 3,
           offset: 1,
           color,
           left,
@@ -45,6 +54,7 @@ export function renderMap(args: {
           scale,
           image,
           type,
+          img: i,
         });
       }
     }

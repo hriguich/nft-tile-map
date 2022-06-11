@@ -12,6 +12,7 @@ export async function renderTile(args: {
   scale?: number;
   image?: string;
   type?: number;
+  img?: any;
 }) {
   const {
     ctx,
@@ -27,21 +28,13 @@ export async function renderTile(args: {
     scale,
     image,
     type,
+    img,
   } = args;
 
   ctx.fillStyle = color;
 
   const tileSize = scale ? size * scale : size * 1.01;
 
-  function loadImage() {
-    let img = new Image();
-    let promise = new Promise((resolve, reject) => {
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-    });
-    img.src = image;
-    return promise;
-  }
   // draw background
   // ctx.save();
   // if (image) {
@@ -53,14 +46,17 @@ export async function renderTile(args: {
   // }
 
   if (image) {
-    const img = await loadImage();
-    ctx.drawImage(
-      img as CanvasImageSource,
-      x - tileSize - offset,
-      y - tileSize - offset,
-      tileSize + offset,
-      tileSize + offset
-    );
+    // const img = await loadImage();
+    // console.log(img);
+    if (type === 8) {
+      ctx.drawImage(
+        img as CanvasImageSource,
+        x - tileSize * 19.8 - offset,
+        y - tileSize * 19.8 - offset,
+        tileSize * 20 + offset,
+        tileSize * 20 + offset
+      );
+    }
   } else if (!top && !left) {
     // disconnected everywhere: it's a square
     ctx.fillStyle = color;

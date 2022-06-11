@@ -69,6 +69,7 @@ export type State = Viewport & {
   zoom: number;
   size: number;
   popup?: Popup;
+  image: any;
 };
 
 export type Popup = {

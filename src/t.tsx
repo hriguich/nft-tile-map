@@ -63,9 +63,9 @@ const T = React.memo(() => {
     6: "#563db8", // contributions
     7: "#716C7A", // roads
     8: "#FF2E63", // plazas
-    9: "#252A34", // owned parcel/estate
+    9: "#00FFAB", // standard
     10: "#3D3A46", // parcels on sale (we show them as owned parcels)
-    12: "#18141a", // background
+    12: "#14C38E", // background
     13: "#110e13", // loading odd
     14: "#0d0b0e", // loading even
   });
@@ -130,7 +130,7 @@ const T = React.memo(() => {
         owner,
         type,
         estateId,
-        image,
+
         price,
         landId,
         zone,
@@ -139,9 +139,47 @@ const T = React.memo(() => {
       };
     } else {
       return {
-        color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[13] : COLOR_BY_TYPE[13],
+        color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[12] : COLOR_BY_TYPE[12],
         type: 6,
       };
+    }
+  };
+  const imagesLayer: Layer = (x, y) => {
+    const id = x + "," + y;
+    if (atlas !== null && id in atlas) {
+      const tile = atlas[id];
+      if (tile.image) {
+        const color = COLOR_BY_TYPE[tile.type];
+
+        const top = !!tile.top;
+        const left = !!tile.left;
+        const topLeft = !!tile.topLeft;
+        const owner = tile.owner;
+        const type = tile.type;
+        const estateId = tile.estate_id;
+        const image = tile.image;
+        const price = tile.price;
+        const landId = tile.landId;
+        const zone = tile.zone;
+        const isHighTraffic = tile.isHighTraffic;
+        const billboard = tile.billboard;
+
+        return {
+          color,
+          top,
+          left,
+          topLeft,
+          owner,
+          type,
+          estateId,
+          image,
+          price,
+          landId,
+          zone,
+          isHighTraffic,
+          billboard,
+        };
+      }
     }
   };
 
@@ -183,6 +221,7 @@ const T = React.memo(() => {
               onSaleLayer,
               selectedStrokeLayer,
               selectedFillLayer,
+              imagesLayer,
               // hoverLayer,
             ]}
             onClick={(tiles, tileInfo) => {

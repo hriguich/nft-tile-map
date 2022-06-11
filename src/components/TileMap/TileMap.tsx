@@ -16,7 +16,7 @@ export class TileMap extends React.PureComponent<Props, State> {
     className: "",
     initialX: 0,
     initialY: 0,
-    size: 14,
+    size: 18,
     width: 640,
     height: 480,
     zoom: 1,
@@ -40,6 +40,7 @@ export class TileMap extends React.PureComponent<Props, State> {
   private popupTimeout: number | null;
   private mousedownTimestamp?: number;
   private destroy?: () => void;
+  private loop?: () => void;
 
   debouncedRenderMap = debounce(this.renderMap.bind(this), 400);
   debouncedUpdateCenter = debounce(this.updateCenter.bind(this), 50);
@@ -58,6 +59,7 @@ export class TileMap extends React.PureComponent<Props, State> {
       size: zoom * size,
       zoom,
       popup: null,
+      image: null,
     };
     this.state = this.generateState(props, initialState);
     this.oldState = this.state;
@@ -65,6 +67,24 @@ export class TileMap extends React.PureComponent<Props, State> {
     this.mounted = false;
     this.canvas = null;
     this.popupTimeout = null;
+
+    this.loop = () => {
+      window.requestAnimationFrame(this.loop);
+      const ctx = this.canvas.getContext("2d")!;
+      ctx.imageSmoothingEnabled = false;
+
+      this.renderMap();
+    };
+
+    const tile_sheet = new Image();
+
+    tile_sheet.addEventListener("load", (event) => {
+      // this.setState({ image: tile_sheet });
+      this.loop();
+    });
+
+    tile_sheet.src =
+      "https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif";
   }
 
   UNSAFE_componentWillUpdate(nextProps: Props, nextState: State) {
@@ -163,8 +183,14 @@ export class TileMap extends React.PureComponent<Props, State> {
     props: { width: number; height: number; padding: number },
     state: { pan: Coord; center: Coord; zoom: number; size: number }
   ): State {
+    // const tile_sheet = new Image();
+
+    // tile_sheet.src =
+    //   "https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif";
     const { width, height, padding } = props;
     const { pan, zoom, center, size } = state;
+    const image = null;
+    // console.log(image);
     const viewport = getViewport({
       width,
       height,
@@ -173,7 +199,7 @@ export class TileMap extends React.PureComponent<Props, State> {
       size,
       padding,
     });
-    return { ...viewport, pan, zoom, center, size };
+    return { ...viewport, pan, zoom, center, size, image };
   }
 
   handleChange() {
@@ -238,7 +264,7 @@ export class TileMap extends React.PureComponent<Props, State> {
       zoom: newZoom,
       size: newSize,
     });
-    this.renderMap();
+    // this.renderMap();
     this.debouncedUpdateCenter();
   };
 
@@ -464,7 +490,7 @@ export class TileMap extends React.PureComponent<Props, State> {
     const { width, height, layers, renderMap } = this.props;
     const { nw, se, pan, size, center } = this.state;
     const ctx = this.canvas.getContext("2d")!;
-
+    const img = this.state.image;
     renderMap({
       ctx,
       width,
