@@ -65,7 +65,7 @@ const T = React.memo(() => {
     8: "#FF2E63", // plazas
     9: "#00FFAB", // standard
     10: "#3D3A46", // parcels on sale (we show them as owned parcels)
-    12: "#14C38E", // background
+    12: "#013220", // background
     13: "#110e13", // loading odd
     14: "#0d0b0e", // loading even
   });
@@ -219,9 +219,9 @@ const T = React.memo(() => {
             layers={[
               atlasLayer,
               onSaleLayer,
+              imagesLayer,
               selectedStrokeLayer,
               selectedFillLayer,
-              imagesLayer,
               // hoverLayer,
             ]}
             onClick={(tiles, tileInfo) => {
