@@ -49,7 +49,7 @@ const T = React.memo(() => {
   let atlas: Record<string, AtlasTile> | null = null;
 
   async function loadTiles() {
-    const config = require("./data.json");
+    const config = require("../data.json");
     // const resp = await fetch("https://api.decentraland.org/v1/tiles");
     const json = config;
     atlas = json.data as Record<string, AtlasTile>;
@@ -62,8 +62,8 @@ const T = React.memo(() => {
     5: "#5054D4", // districts
     6: "#563db8", // contributions
     7: "#716C7A", // roads
-    8: "#FF2E63", // plazas
-    9: "#00FFAB", // standard
+    3: "#FF2E63", // plazas
+    30: "#00FFAB", // standard
     10: "#3D3A46", // parcels on sale (we show them as owned parcels)
     12: "#013220", // background
     13: "#110e13", // loading odd
@@ -224,14 +224,14 @@ const T = React.memo(() => {
               selectedFillLayer,
               // hoverLayer,
             ]}
-            onClick={(tiles, tileInfo) => {
-              if (isSelected(tiles[0].x, tiles[0].y)) {
-                setSelectedTile({ tiles: [], tileInfo: {} });
-              } else {
-                console.log(tileInfo);
-                setSelectedTile({ tiles, tileInfo });
-              }
-            }}
+            // onClick={(tiles, tileInfo) => {
+            //   if (isSelected(tiles[0].x, tiles[0].y)) {
+            //     setSelectedTile({ tiles: [], tileInfo: {} });
+            //   } else {
+            //     console.log(tileInfo);
+            //     setSelectedTile({ tiles, tileInfo });
+            //   }
+            // }}
             // onHover={(x, y) => setHover({ x, y })}
             onPopup={(state) => {}}
             SQUARE_BY_TYPE={SQUARE_BY_TYPE}

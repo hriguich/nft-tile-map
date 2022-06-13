@@ -1,0 +1,476 @@
+{
+  "ok": true,
+  "data": {
+    "60,60": {
+      "type": 30,
+      "x": 60,
+      "y": 60,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "60,61": {
+      "type": 30,
+      "x": 60,
+      "y": 61,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "60,62": {
+      "type": 30,
+      "x": 60,
+      "y": 62,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "60,63": {
+      "type": 30,
+      "x": 60,
+      "y": 63,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "61,60": {
+      "type": 30,
+      "x": 61,
+      "y": 60,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "61,61": {
+      "type": 30,
+      "x": 61,
+      "y": 61,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "61,62": {
+      "type": 30,
+      "x": 61,
+      "y": 62,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "61,63": {
+      "type": 30,
+      "x": 61,
+      "y": 63,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "62,60": {
+      "type": 30,
+      "x": 62,
+      "y": 60,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "62,61": {
+      "type": 30,
+      "x": 62,
+      "y": 61,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "62,62": {
+      "type": 30,
+      "x": 62,
+      "y": 62,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "62,63": {
+      "type": 30,
+      "x": 62,
+      "y": 63,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "63,60": {
+      "type": 30,
+      "x": 63,
+      "y": 60,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "63,61": {
+      "type": 30,
+      "x": 63,
+      "y": 61,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "63,62": {
+      "type": 30,
+      "x": 63,
+      "y": 62,
+      "top": 1,
+      "left": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "63,63": {
+      "type": 30,
+      "x": 63,
+      "y": 63,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "64,60": {
+      "type": 30,
+      "x": 64,
+      "y": 60,
+      "top": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "64,61": {
+      "type": 30,
+      "x": 64,
+      "y": 61,
+      "top": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "64,62": {
+      "type": 30,
+      "x": 64,
+      "y": 62,
+      "top": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "64,63": {
+      "type": 30,
+      "x": 64,
+      "y": 63,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6755"
+    },
+    "1,1": {
+      "type": 3,
+      "x": 1,
+      "y": 1,
+      "top": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "1,2": {
+      "type": 3,
+      "x": 1,
+      "y": 2,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "1,4": {
+      "type": 3,
+      "x": 1,
+      "y": 4,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "1,7": {
+      "type": 3,
+      "x": 1,
+      "y": 7,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "2,7": {
+      "type": 3,
+      "x": 2,
+      "y": 7,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "3,8": {
+      "type": 3,
+      "x": 3,
+      "y": 8,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "4,10": {
+      "type": 3,
+      "x": 4,
+      "y": 10,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "5,13": {
+      "type": 3,
+      "x": 5,
+      "y": 13,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "7,13": {
+      "type": 3,
+      "x": 7,
+      "y": 13,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "9,14": {
+      "type": 3,
+      "x": 9,
+      "y": 14,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "11,16": {
+      "type": 3,
+      "x": 11,
+      "y": 16,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "13,19": {
+      "type": 3,
+      "x": 13,
+      "y": 19,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "16,19": {
+      "type": 3,
+      "x": 16,
+      "y": 19,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "19,20": {
+      "type": 3,
+      "x": 19,
+      "y": 20,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "22,22": {
+      "type": 3,
+      "x": 22,
+      "y": 22,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "25,25": {
+      "type": 3,
+      "x": 25,
+      "y": 25,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "29,25": {
+      "type": 3,
+      "x": 29,
+      "y": 25,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "33,26": {
+      "type": 3,
+      "x": 33,
+      "y": 26,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "37,28": {
+      "type": 3,
+      "x": 37,
+      "y": 28,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "41,31": {
+      "type": 3,
+      "x": 41,
+      "y": 31,
+      "top": 1,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6400"
+    },
+    "41,26": {
+      "type": 3,
+      "x": 41,
+      "y": 26,
+      "top": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "41,27": {
+      "type": 3,
+      "x": 41,
+      "y": 27,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "41,29": {
+      "type": 3,
+      "x": 41,
+      "y": 29,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "41,32": {
+      "type": 3,
+      "x": 41,
+      "y": 32,
+      "left": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "42,32": {
+      "type": 3,
+      "x": 42,
+      "y": 32,
+      "topLeft": 1,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "43,33": {
+      "type": 3,
+      "x": 43,
+      "y": 33,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "44,35": {
+      "type": 3,
+      "x": 44,
+      "y": 35,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "45,38": {
+      "type": 3,
+      "x": 45,
+      "y": 38,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "47,38": {
+      "type": 3,
+      "x": 47,
+      "y": 38,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "49,39": {
+      "type": 3,
+      "x": 49,
+      "y": 39,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "51,41": {
+      "type": 3,
+      "x": 51,
+      "y": 41,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "53,44": {
+      "type": 3,
+      "x": 53,
+      "y": 44,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "56,44": {
+      "type": 3,
+      "x": 56,
+      "y": 44,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "59,45": {
+      "type": 3,
+      "x": 59,
+      "y": 45,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "62,47": {
+      "type": 3,
+      "x": 62,
+      "y": 47,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "65,50": {
+      "type": 3,
+      "x": 65,
+      "y": 50,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "69,50": {
+      "type": 3,
+      "x": 69,
+      "y": 50,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "73,51": {
+      "type": 3,
+      "x": 73,
+      "y": 51,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "77,53": {
+      "type": 3,
+      "x": 77,
+      "y": 53,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    },
+    "81,56": {
+      "type": 3,
+      "x": 81,
+      "y": 56,
+      "owner": "0xa65be351527ebcf8c1707d1e444dac38b41a5faf",
+      "estate_id": "6367"
+    }
+  }
+}
