@@ -299,7 +299,9 @@ export class TileMap extends React.PureComponent<Props, State> {
 
         const owner = tileInfo.owner;
         const type = tileInfo.type;
-        if (type === 9 || type === 7) {
+        const estateId = tileInfo.estateId;
+
+        if (type === 1) {
           onClick([{ x, y }], tileInfo);
           this.renderMap();
         } else {
@@ -307,7 +309,11 @@ export class TileMap extends React.PureComponent<Props, State> {
           let isTop = true;
           while (isTop) {
             let topTileInfo = this.props.layers[0](x, y + topSteps);
-            if (topTileInfo.owner === owner && topTileInfo.type === type) {
+            if (
+              topTileInfo.owner === owner &&
+              topTileInfo.estateId === estateId &&
+              topTileInfo.type === type
+            ) {
               topSteps = topSteps + 1;
             } else {
               topSteps = topSteps;
@@ -322,7 +328,8 @@ export class TileMap extends React.PureComponent<Props, State> {
             const bottomTileInfo = this.props.layers[0](x, y + bottomSteps);
             if (
               bottomTileInfo.owner === owner &&
-              bottomTileInfo.type === type
+              bottomTileInfo.type === type &&
+              bottomTileInfo.estateId === estateId
             ) {
               bottomSteps = bottomSteps - 1;
             } else {
@@ -336,7 +343,11 @@ export class TileMap extends React.PureComponent<Props, State> {
           let isLeft = true;
           while (isLeft) {
             const leftTileInfo = this.props.layers[0](x + leftSteps, y);
-            if (leftTileInfo.owner === owner && leftTileInfo.type === type) {
+            if (
+              leftTileInfo.owner === owner &&
+              leftTileInfo.estateId === estateId &&
+              leftTileInfo.type === type
+            ) {
               leftSteps = leftSteps - 1;
             } else {
               leftSteps = leftSteps;
@@ -349,7 +360,11 @@ export class TileMap extends React.PureComponent<Props, State> {
           let isRight = true;
           while (isRight) {
             const rightTileInfo = this.props.layers[0](x + rightSteps, y);
-            if (rightTileInfo.owner === owner && rightTileInfo.type === type) {
+            if (
+              rightTileInfo.owner === owner &&
+              rightTileInfo.estateId === estateId &&
+              rightTileInfo.type === type
+            ) {
               rightSteps = rightSteps + 1;
             } else {
               rightSteps = rightSteps - 1;

@@ -58,13 +58,11 @@ const T = React.memo(() => {
   loadTiles().catch(console.error);
 
   const COLOR_BY_TYPE = Object.freeze({
-    0: "#ff9990", // my parcels
-    5: "#5054D4", // districts
-    6: "#563db8", // contributions
-    7: "#716C7A", // roads
-    3: "#FF2E63", // plazas
-    30: "#00FFAB", // standard
-    10: "#3D3A46", // parcels on sale (we show them as owned parcels)
+    1: "#00FFAB",
+    2: "#00FFAB",
+    4: "#00FFAB",
+    20: "#00FFAB",
+    40: "#00FFAB",
     12: "#013220", // background
     13: "#110e13", // loading odd
     14: "#0d0b0e", // loading even
@@ -224,14 +222,14 @@ const T = React.memo(() => {
               selectedFillLayer,
               // hoverLayer,
             ]}
-            // onClick={(tiles, tileInfo) => {
-            //   if (isSelected(tiles[0].x, tiles[0].y)) {
-            //     setSelectedTile({ tiles: [], tileInfo: {} });
-            //   } else {
-            //     console.log(tileInfo);
-            //     setSelectedTile({ tiles, tileInfo });
-            //   }
-            // }}
+            onClick={(tiles, tileInfo) => {
+              if (isSelected(tiles[0].x, tiles[0].y)) {
+                setSelectedTile({ tiles: [], tileInfo: {} });
+              } else {
+                console.log(tileInfo);
+                setSelectedTile({ tiles, tileInfo });
+              }
+            }}
             // onHover={(x, y) => setHover({ x, y })}
             onPopup={(state) => {}}
             SQUARE_BY_TYPE={SQUARE_BY_TYPE}
