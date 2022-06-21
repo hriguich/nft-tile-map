@@ -68,10 +68,10 @@ const T = React.memo(() => {
     8: "#1D5171", //beach
     9: "#1D5171", //beach
     0: "#47484C", //roads
-    10000: "#15B2D1", // river
-    10001: "#65CBDA", // river
-    10011: "#C2B280", // sand
-    12: "#013220", // background
+    11: "#15B2D1", // river
+    12: "#65CBDA", // river
+    13: "#C2B280", // sand
+    999: "#013220", // background
   });
 
   const STRING_TYPE = Object.freeze({
@@ -85,10 +85,10 @@ const T = React.memo(() => {
     8: "Beach", //beach
     9: "Beach", //beach
     0: "Road", //roads
-    10000: "River", // river
-    10001: "River", // river
-    10011: "Sand", // sand
-    12: "Background", // background
+    11: "River", // river
+    12: "River", // river
+    13: "Sand", // sand
+    999: "Background", // background
   });
 
   const SQUARE_BY_TYPE = Object.freeze({
@@ -102,10 +102,10 @@ const T = React.memo(() => {
     8: 729, //beach
     9: 14580, //beach
     0: 0, //roads
-    10000: 0, // river
-    10001: 0, // river
-    10011: 0, // sand
-    12: 0, // background
+    11: 0, // river
+    12: 0, // river
+    13: 0, // sand
+    999: 0, // background
   });
 
   let selected = [];
@@ -154,8 +154,8 @@ const T = React.memo(() => {
       };
     } else {
       return {
-        color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[12] : COLOR_BY_TYPE[12],
-        type: 12,
+        color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[999] : COLOR_BY_TYPE[999],
+        type: 999,
       };
     }
   };
@@ -282,7 +282,12 @@ const T = React.memo(() => {
                   </span>
                   <span className="flex space-x-2 ">
                     <h2 className="font-semibold">Type:</h2>
-                    <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
+                    {selectedTile?.tileInfo?.type == 1 &&
+                    selectedTile?.tileInfo?.landId == 0 ? (
+                      <p> Road</p>
+                    ) : (
+                      <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
+                    )}
                   </span>
                   <span className="flex space-x-2 ">
                     <h2 className="font-semibold">Square meters:</h2>

@@ -284,12 +284,12 @@ export class TileMap extends React.PureComponent<Props, State> {
       const elapsed = Date.now() - this.mousedownTimestamp!;
       if (elapsed < 200) {
         const tileInfo = this.props.layers[0](x, y);
-        if (tileInfo.type != 12) {
+        if (tileInfo.type != 999) {
           const owner = tileInfo.owner;
           const type = tileInfo.type;
           const landId = tileInfo.landId;
 
-          if (type === 1) {
+          if (type === 1 && landId != 0) {
             onClick([{ x, y }], tileInfo);
             this.renderMap();
           } else {
@@ -431,7 +431,7 @@ export class TileMap extends React.PureComponent<Props, State> {
 
     if (onPopup) {
       this.hidePopup();
-      if (this.props.layers[0](x, y).type != 12) {
+      if (this.props.layers[0](x, y).type != 999) {
         this.popupTimeout = +setTimeout(() => {
           if (this.mounted) {
             this.setState(
