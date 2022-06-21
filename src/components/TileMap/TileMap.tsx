@@ -43,7 +43,7 @@ export class TileMap extends React.PureComponent<Props, State> {
   private loop?: () => void;
 
   debouncedRenderMap = debounce(this.renderMap.bind(this), 400);
-  debouncedUpdateCenter = debounce(this.updateCenter.bind(this), 50);
+  debouncedUpdateCenter = debounce(this.updateCenter.bind(this), 100);
   debouncedHandleChange = debounce(this.handleChange.bind(this), 50);
 
   constructor(props: Props) {
@@ -67,24 +67,10 @@ export class TileMap extends React.PureComponent<Props, State> {
     this.mounted = false;
     this.canvas = null;
     this.popupTimeout = null;
-
     this.loop = () => {
       window.requestAnimationFrame(this.loop);
-      const ctx = this.canvas.getContext("2d")!;
-      ctx.imageSmoothingEnabled = false;
-
       this.renderMap();
     };
-
-    const tile_sheet = new Image();
-
-    tile_sheet.addEventListener("load", (event) => {
-      // this.setState({ image: tile_sheet });
-      this.loop();
-    });
-
-    tile_sheet.src =
-      "https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif";
   }
 
   UNSAFE_componentWillUpdate(nextProps: Props, nextState: State) {
@@ -218,7 +204,9 @@ export class TileMap extends React.PureComponent<Props, State> {
     const { pan, zoom } = this.state;
 
     const maxZoom = maxSize / size;
-    const minZoom = minSize / size;
+    const minZoom = this.isMobile()
+      ? (minSize / size) * 1.5
+      : (minSize / size) * 1.2;
 
     const newPan = { x: pan.x - dx, y: pan.y - dy };
     const newZoom = Math.max(
@@ -296,99 +284,103 @@ export class TileMap extends React.PureComponent<Props, State> {
       const elapsed = Date.now() - this.mousedownTimestamp!;
       if (elapsed < 200) {
         const tileInfo = this.props.layers[0](x, y);
+        if (tileInfo.type != 12) {
+          const owner = tileInfo.owner;
+          const type = tileInfo.type;
+          const landId = tileInfo.landId;
 
-        const owner = tileInfo.owner;
-        const type = tileInfo.type;
-        const estateId = tileInfo.estateId;
-
-        if (type === 1) {
-          onClick([{ x, y }], tileInfo);
-          this.renderMap();
-        } else {
-          let topSteps = 0;
-          let isTop = true;
-          while (isTop) {
-            let topTileInfo = this.props.layers[0](x, y + topSteps);
-            if (
-              topTileInfo.owner === owner &&
-              topTileInfo.estateId === estateId &&
-              topTileInfo.type === type
-            ) {
-              topSteps = topSteps + 1;
-            } else {
-              topSteps = topSteps;
-              isTop = false;
-              break;
+          if (type === 1) {
+            onClick([{ x, y }], tileInfo);
+            this.renderMap();
+          } else {
+            let topSteps = 0;
+            let isTop = true;
+            while (isTop) {
+              let topTileInfo = this.props.layers[0](x, y + topSteps);
+              if (
+                topTileInfo.owner === owner &&
+                topTileInfo.landId === landId &&
+                topTileInfo.type === type
+              ) {
+                topSteps = topSteps + 1;
+              } else {
+                topSteps = topSteps;
+                isTop = false;
+                break;
+              }
             }
-          }
 
-          let bottomSteps = 0;
-          let isBottom = true;
-          while (isBottom) {
-            const bottomTileInfo = this.props.layers[0](x, y + bottomSteps);
-            if (
-              bottomTileInfo.owner === owner &&
-              bottomTileInfo.type === type &&
-              bottomTileInfo.estateId === estateId
-            ) {
-              bottomSteps = bottomSteps - 1;
-            } else {
-              bottomSteps = bottomSteps + 1;
-              isBottom = false;
-              break;
+            let bottomSteps = 0;
+            let isBottom = true;
+            while (isBottom) {
+              const bottomTileInfo = this.props.layers[0](x, y + bottomSteps);
+              if (
+                bottomTileInfo.owner === owner &&
+                bottomTileInfo.type === type &&
+                bottomTileInfo.landId === landId
+              ) {
+                bottomSteps = bottomSteps - 1;
+              } else {
+                bottomSteps = bottomSteps + 1;
+                isBottom = false;
+                break;
+              }
             }
-          }
 
-          let leftSteps = 0;
-          let isLeft = true;
-          while (isLeft) {
-            const leftTileInfo = this.props.layers[0](x + leftSteps, y);
-            if (
-              leftTileInfo.owner === owner &&
-              leftTileInfo.estateId === estateId &&
-              leftTileInfo.type === type
-            ) {
-              leftSteps = leftSteps - 1;
-            } else {
-              leftSteps = leftSteps;
-              isLeft = false;
-              break;
+            let leftSteps = 0;
+            let isLeft = true;
+            while (isLeft) {
+              const leftTileInfo = this.props.layers[0](x + leftSteps, y);
+              if (
+                leftTileInfo.owner === owner &&
+                leftTileInfo.landId === landId &&
+                leftTileInfo.type === type
+              ) {
+                leftSteps = leftSteps - 1;
+              } else {
+                leftSteps = leftSteps;
+                isLeft = false;
+                break;
+              }
             }
-          }
 
-          let rightSteps = 0;
-          let isRight = true;
-          while (isRight) {
-            const rightTileInfo = this.props.layers[0](x + rightSteps, y);
-            if (
-              rightTileInfo.owner === owner &&
-              rightTileInfo.estateId === estateId &&
-              rightTileInfo.type === type
-            ) {
-              rightSteps = rightSteps + 1;
-            } else {
-              rightSteps = rightSteps - 1;
-              isRight = false;
-              break;
+            let rightSteps = 0;
+            let isRight = true;
+            while (isRight) {
+              const rightTileInfo = this.props.layers[0](x + rightSteps, y);
+              if (
+                rightTileInfo.owner === owner &&
+                rightTileInfo.landId === landId &&
+                rightTileInfo.type === type
+              ) {
+                rightSteps = rightSteps + 1;
+              } else {
+                rightSteps = rightSteps - 1;
+                isRight = false;
+                break;
+              }
             }
-          }
-          const rightBottomCorner = { y: y + bottomSteps, x: x + rightSteps };
-          const xCoordsCount = Array(rightSteps - leftSteps);
-          const yCoordsCount = Array(topSteps - bottomSteps);
-          let yTiles = [];
-          let tiles = [];
-          for (let i = 0; i < yCoordsCount.length; i++) {
-            yTiles.push({ x: rightBottomCorner.x, y: rightBottomCorner.y + i });
-          }
-          for (let i = 0; i < yTiles.length; i++) {
-            const tile = yTiles[i];
-            for (let index = 0; index < xCoordsCount.length; index++) {
-              tiles.push({ x: tile.x - index, y: tile.y });
+            const rightBottomCorner = { y: y + bottomSteps, x: x + rightSteps };
+            const xCoordsCount = Array(rightSteps - leftSteps);
+            const yCoordsCount = Array(topSteps - bottomSteps);
+            let yTiles = [];
+            let tiles = [];
+            for (let i = 0; i < yCoordsCount.length; i++) {
+              yTiles.push({
+                x: rightBottomCorner.x,
+                y: rightBottomCorner.y + i,
+              });
             }
-          }
+            for (let i = 0; i < yTiles.length; i++) {
+              const tile = yTiles[i];
+              for (let index = 0; index < xCoordsCount.length; index++) {
+                tiles.push({ x: tile.x - index, y: tile.y });
+              }
+            }
 
-          onClick(tiles, tileInfo);
-          this.renderMap();
+            onClick(tiles, tileInfo);
+            this.renderMap();
+          }
         }
       }
     }
@@ -439,16 +431,18 @@ export class TileMap extends React.PureComponent<Props, State> {
 
     if (onPopup) {
       this.hidePopup();
-      this.popupTimeout = +setTimeout(() => {
-        if (this.mounted) {
-          this.setState(
-            {
-              popup: { x, y, top, left, visible: true },
-            },
-            () => onPopup(this.state.popup!)
-          );
-        }
-      }, 100);
+      if (this.props.layers[0](x, y).type != 12) {
+        this.popupTimeout = +setTimeout(() => {
+          if (this.mounted) {
+            this.setState(
+              {
+                popup: { x, y, top, left, visible: true },
+              },
+              () => onPopup(this.state.popup!)
+            );
+          }
+        }, 100);
+      }
     }
 
     if (onHover) {
@@ -505,7 +499,6 @@ export class TileMap extends React.PureComponent<Props, State> {
     const { width, height, layers, renderMap } = this.props;
     const { nw, se, pan, size, center } = this.state;
     const ctx = this.canvas.getContext("2d")!;
-    const img = this.state.image;
     renderMap({
       ctx,
       width,
@@ -521,6 +514,7 @@ export class TileMap extends React.PureComponent<Props, State> {
 
   refCanvas = (canvas: HTMLCanvasElement | null) => {
     this.canvas = canvas;
+    this.loop();
   };
 
   handleTarget = () => {
@@ -559,9 +553,11 @@ export class TileMap extends React.PureComponent<Props, State> {
     const classes = ("react-tile-map " + className).trim();
     return (
       <div>
-        {this.state.popup?.visible && (
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+        {this.state.popup?.visible && !this.isMobile() && (
           <div
-            className="fixed z-[999]  rounded-lg text-white bg-gray-900 px-5 py-2"
+            className="fixed z-[999] rounded-lg text-white bg-gray-900 px-5 py-2 "
             style={{
               top: this.state.popup?.top - 30,
               left: this.state.popup?.left + 30,
@@ -611,7 +607,6 @@ export class TileMap extends React.PureComponent<Props, State> {
                       </p>
                     ) : (
                       <p className="text-green-800 font-semibold text-sm">
-                        {" "}
                         Low traffic area
                       </p>
                     )}

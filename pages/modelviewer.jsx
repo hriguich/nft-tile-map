@@ -24,7 +24,7 @@ function Modelviewer() {
   return (
     <div className="overflow-x-hidden">
       <NavBar />
-      <div className="w-screen h-screen flex justify-center ">
+      <div className="w-screen h-[84vh] md:h-screen flex justify-center ">
         <Script
           type="module"
           src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"

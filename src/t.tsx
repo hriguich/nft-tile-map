@@ -58,37 +58,54 @@ const T = React.memo(() => {
   loadTiles().catch(console.error);
 
   const COLOR_BY_TYPE = Object.freeze({
-    1: "#00FFAB",
-    2: "#00FFAB",
-    4: "#00FFAB",
-    20: "#00FFAB",
-    40: "#00FFAB",
+    1: "#B4D6C1", // standard
+    2: "#8DC3A7", // deluxe
+    3: "#6BAF92", // villa
+    4: "#4E9C81", // ex
+    5: "#0000FF", //shop
+    6: "#1D5171", //beach
+    7: "#1D5171", //beach
+    8: "#1D5171", //beach
+    9: "#1D5171", //beach
+    0: "#47484C", //roads
+    10000: "#15B2D1", // river
+    10001: "#65CBDA", // river
+    10011: "#C2B280", // sand
     12: "#013220", // background
-    13: "#110e13", // loading odd
-    14: "#0d0b0e", // loading even
   });
 
   const STRING_TYPE = Object.freeze({
-    0: "villa", // my parcels
-    5: "villa", // villa
-    6: "standard", // contributions
-    7: "roads", // roads
-    8: "exclusive", // exclusive
-    9: "standard", // standard
-    10: "deluxe", // deluxe
+    1: "Standard", // standard
+    2: "Deluxe", // deluxe
+    3: "Villa", // villa
+    4: "Exclusive", // ex
+    5: "Shop", //shop
+    6: "Beach", //beach
+    7: "Beach", //beach
+    8: "Beach", //beach
+    9: "Beach", //beach
+    0: "Road", //roads
+    10000: "River", // river
+    10001: "River", // river
+    10011: "Sand", // sand
+    12: "Background", // background
   });
 
   const SQUARE_BY_TYPE = Object.freeze({
-    0: "#ff9990", // my parcels
-    5: 13456, // villa
-    6: "#563db8", // contributions
-    7: "#716C7A", // roads
-    8: 30625, // exclusive
-    9: 729, // standard
-    10: 4356, // deluxe
-    12: "#18141a", // background
-    13: "#110e13", // loading odd
-    14: "#0d0b0e", // loading even
+    1: 729, // standard
+    2: 4374, // deluxe
+    3: 14580, // villa
+    4: 30618, // ex
+    5: 14580, //shop
+    6: 30618, //beach
+    7: 4374, //beach
+    8: 729, //beach
+    9: 14580, //beach
+    0: 0, //roads
+    10000: 0, // river
+    10001: 0, // river
+    10011: 0, // sand
+    12: 0, // background
   });
 
   let selected = [];
@@ -138,7 +155,7 @@ const T = React.memo(() => {
     } else {
       return {
         color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[12] : COLOR_BY_TYPE[12],
-        type: 6,
+        type: 12,
       };
     }
   };
@@ -223,11 +240,13 @@ const T = React.memo(() => {
               // hoverLayer,
             ]}
             onClick={(tiles, tileInfo) => {
-              if (isSelected(tiles[0].x, tiles[0].y)) {
-                setSelectedTile({ tiles: [], tileInfo: {} });
-              } else {
-                console.log(tileInfo);
-                setSelectedTile({ tiles, tileInfo });
+              if (atlasLayer(tiles[0].x, tiles[0].y)) {
+                if (isSelected(tiles[0].x, tiles[0].y)) {
+                  setSelectedTile({ tiles: [], tileInfo: {} });
+                } else {
+                  console.log(tileInfo);
+                  setSelectedTile({ tiles, tileInfo });
+                }
               }
             }}
             // onHover={(x, y) => setHover({ x, y })}
@@ -236,11 +255,11 @@ const T = React.memo(() => {
           />
         </div>
         <div className="flex w-[85vw] ">
-          <div className=" mt-10 w-full bg-white drop-shadow-md rounded-lg">
+          <div className=" my-10 w-full bg-white drop-shadow-md rounded-lg">
             {selectedTile?.tileInfo?.type ? (
-              <div className="m-10 flex justify-between">
+              <div className="m-8 flex flex-col md:flex-row justify-between">
                 <div>
-                  <span className="text-xl font-semibolds">
+                  <span className="text-lg md:text-xl font-semibolds">
                     {selectedTile?.tiles.length === 1
                       ? `Coords (${selectedTile?.tiles[0].x},${selectedTile?.tiles[0].y})`
                       : `Coords (${selectedTile?.tiles[0].x},${
@@ -284,7 +303,6 @@ const T = React.memo(() => {
                       </p>
                     ) : (
                       <p className="text-green-800 font-semibold">
-                        {" "}
                         Low traffic area
                       </p>
                     )}
@@ -301,7 +319,7 @@ const T = React.memo(() => {
                     onClick={() => {
                       router.replace("/modelviewer?type=1");
                     }}
-                    className="cursor-pointer mt-6 p-4 bg-[#252A34] text-white rounded-lg"
+                    className="cursor-pointer w-full text-center p-2 mt-10 md:mt-6 md:p-3 md:px-16 bg-[#252A34] text-white rounded-lg"
                   >
                     <button>Go in</button>
                   </div>
