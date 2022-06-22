@@ -669,13 +669,10 @@ export class TileMap extends React.PureComponent<Props, State> {
                   <h2>Owner </h2>
                   <p>
                     {` : `}
-                    {
-                      this.props.layers[0](
-                        this.state.popup?.x,
-                        this.state.popup?.y
-                      )?.owner
-                    }
-                    {/* )?.owner.substring(0, 6)} */}
+                    {this.props.layers[0](
+                      this.state.popup?.x,
+                      this.state.popup?.y
+                    )?.owner.substring(0, 6)}
                   </p>
                 </div>
 
@@ -723,12 +720,15 @@ export class TileMap extends React.PureComponent<Props, State> {
                 </div>
                 <div className="flex">
                   <p>
-                    {
-                      this.props.layers[0](
-                        this.state.popup?.x,
-                        this.state.popup?.y
-                      ).billboard
-                    }
+                    {this.props.layers[0](
+                      this.state.popup?.x,
+                      this.state.popup?.y
+                    ).billboard === "None"
+                      ? ""
+                      : this.props.layers[0](
+                          this.state.popup?.x,
+                          this.state.popup?.y
+                        ).billboard}
                   </p>
                 </div>
               </div>
