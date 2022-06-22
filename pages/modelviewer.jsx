@@ -36,9 +36,10 @@ function Modelviewer() {
               ar-modes="webxr scene-viewer quick-look"
               poster={`models/${path}`}
               seamless-poster
-              shadow-intensity="1"
-              exposure="1"
+              shadow-intensity="2"
+              exposure="0.2"
               camera-controls
+              environment-image="whipple_creek_regional_park_04_1k.hdr"
               enable-pan
             ></model-viewer>
           )}
