@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TileMap, Layer } from "./index";
 import { useRouter } from "../node_modules/next/router";
 
-const T = React.memo(() => {
+const T = () => {
   const router = useRouter();
+  const [atlas, setAtlas] = useState(null);
   const [selectedTile, setSelectedTile] = useState<SelectedTile>({
     tiles: [],
     tileInfo: {},
+    coords: null,
   });
   // const [hover, setHover] = useState({ x: 0, y: 0 });
   // const isPositive = (x: number, y: number) => x > 0 && y > 0;
@@ -26,6 +28,7 @@ const T = React.memo(() => {
   type SelectedTile = {
     tiles;
     tileInfo;
+    coords;
   };
 
   type AtlasTile = {
@@ -46,16 +49,33 @@ const T = React.memo(() => {
     billboard?: string;
   };
 
-  let atlas: Record<string, AtlasTile> | null = null;
+  // let atlas: Record<string, AtlasTile> | null = null;
 
   async function loadTiles() {
+    var requestOptions = {
+      method: "POST",
+    };
+
+    const res = fetch("http://178.62.103.157/data", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(JSON.parse(result));
+        return JSON.parse(result);
+      })
+      .catch((error) => console.log("error", error));
+
     const config = require("../data.json");
     // const resp = await fetch("https://api.decentraland.org/v1/tiles");
-    const json = config;
-    atlas = json.data as Record<string, AtlasTile>;
+    const json = await res;
+    console.log(json.data);
+    setAtlas(json.data);
   }
 
-  loadTiles().catch(console.error);
+  useEffect(() => {
+    if (atlas === null) {
+      loadTiles().catch(console.error);
+    }
+  }, []);
 
   const COLOR_BY_TYPE = Object.freeze({
     1: "#B4D6C1", // standard
@@ -67,7 +87,7 @@ const T = React.memo(() => {
     7: "#1D5171", //beach
     8: "#1D5171", //beach
     9: "#1D5171", //beach
-    0: "#47484C", //roads
+    10: "#47484C", //roads
     11: "#15B2D1", // river
     12: "#65CBDA", // river
     13: "#C2B280", // sand
@@ -78,13 +98,13 @@ const T = React.memo(() => {
     1: "Standard", // standard
     2: "Deluxe", // deluxe
     3: "Villa", // villa
-    4: "Exclusive", // ex
+    4: "Executive", // ex
     5: "Shop", //shop
     6: "Beach", //beach
     7: "Beach", //beach
     8: "Beach", //beach
     9: "Beach", //beach
-    0: "Road", //roads
+    10: "Road", //roads
     11: "River", // river
     12: "River", // river
     13: "Sand", // sand
@@ -101,7 +121,7 @@ const T = React.memo(() => {
     7: 4374, //beach
     8: 729, //beach
     9: 14580, //beach
-    0: 0, //roads
+    10: 0, //roads
     11: 0, // river
     12: 0, // river
     13: 0, // sand
@@ -122,7 +142,14 @@ const T = React.memo(() => {
     const id = x + "," + y;
     if (atlas !== null && id in atlas) {
       const tile = atlas[id];
-      const color = COLOR_BY_TYPE[tile.type];
+      let color;
+      // console.log(selectedTile?.tiles[id]);
+
+      if (selectedTile?.tiles[id]) {
+        color = "#ff9990";
+      } else {
+        color = COLOR_BY_TYPE[tile.type];
+      }
 
       const top = !!tile.top;
       const left = !!tile.left;
@@ -136,6 +163,8 @@ const T = React.memo(() => {
       const zone = tile.zone;
       const isHighTraffic = tile.isHighTraffic;
       const billboard = tile.billboard;
+      const modelPath = tile["3dfile"];
+      const riverFront = tile.riverFront;
 
       return {
         color,
@@ -145,12 +174,13 @@ const T = React.memo(() => {
         owner,
         type,
         estateId,
-
         price,
         landId,
         zone,
         isHighTraffic,
         billboard,
+        modelPath,
+        riverFront,
       };
     } else {
       return {
@@ -220,7 +250,8 @@ const T = React.memo(() => {
   };
 
   const selectedFillLayer: Layer = (x, y) => {
-    return isSelected(x, y) ? { color: "#ff9990", scale: 1.2 } : null;
+    // console.log("re");
+    return isSelected(x, y) ? { color: "#ff9990", scale: 1.4 } : null;
   };
   return (
     <>
@@ -235,17 +266,42 @@ const T = React.memo(() => {
               atlasLayer,
               onSaleLayer,
               imagesLayer,
-              selectedStrokeLayer,
-              selectedFillLayer,
+              // selectedStrokeLayer,
+              // selectedFillLayer,
               // hoverLayer,
             ]}
-            onClick={(tiles, tileInfo) => {
-              if (atlasLayer(tiles[0].x, tiles[0].y)) {
-                if (isSelected(tiles[0].x, tiles[0].y)) {
-                  setSelectedTile({ tiles: [], tileInfo: {} });
+            onClick={(tiles, tileInfo, x, y, title) => {
+              console.log(x, y, selectedTile);
+              if (selectedTile?.tiles[`${x},${y}`]) {
+                setSelectedTile({ tiles: {}, tileInfo: {}, coords: null });
+              } else {
+                let coords;
+                if (title) {
+                  coords = title;
+                  setSelectedTile({ tiles, tileInfo, coords });
                 } else {
-                  console.log(tileInfo);
-                  setSelectedTile({ tiles, tileInfo });
+                  if (Object.keys(tiles).length === 1) {
+                    const firstCoord = Object.values(tiles)[0] as any;
+                    const x1 = firstCoord.x;
+                    const y1 = firstCoord.y;
+
+                    coords = `(${x1},${y1})`;
+                  } else if (Object.keys(tiles).length > 1) {
+                    const firstCoord = Object.values(tiles)[0] as any;
+                    const x1 = firstCoord.x;
+                    const y1 = firstCoord.y;
+
+                    const lastCoord = Object.values(tiles)[
+                      Object.keys(tiles).length - 1
+                    ] as any;
+                    const x2 = lastCoord.x;
+                    const y2 = lastCoord.y;
+
+                    coords = `(${x1},${y1}) : (${x2},${y2})`;
+                  }
+
+                  console.log({ tiles, tileInfo });
+                  setSelectedTile({ tiles, tileInfo, coords });
                 }
               }
             }}
@@ -256,19 +312,11 @@ const T = React.memo(() => {
         </div>
         <div className="flex w-[85vw] ">
           <div className=" my-10 w-full bg-white drop-shadow-md rounded-lg">
-            {selectedTile?.tileInfo?.type ? (
+            {Object.keys(selectedTile?.tiles).length != 0 ? (
               <div className="m-8 flex flex-col md:flex-row justify-between">
                 <div>
                   <span className="text-lg md:text-xl font-semibolds">
-                    {selectedTile?.tiles.length === 1
-                      ? `Coords (${selectedTile?.tiles[0].x},${selectedTile?.tiles[0].y})`
-                      : `Coords (${selectedTile?.tiles[0].x},${
-                          selectedTile?.tiles[0].y
-                        }) : (${
-                          selectedTile?.tiles[selectedTile?.tiles.length - 1].x
-                        },${
-                          selectedTile?.tiles[selectedTile?.tiles.length - 1].y
-                        })`}
+                    {selectedTile?.coords && selectedTile?.coords}
                   </span>
                   <span className="flex space-x-2 mt-5">
                     <h2 className="font-semibold">Land id:</h2>
@@ -301,16 +349,26 @@ const T = React.memo(() => {
                     <h2 className="font-semibold">Billboard:</h2>
                     <p> {selectedTile?.tileInfo?.billboard}</p>
                   </span>
-                  <span className="flex space-x-2 mt-5 ">
-                    {selectedTile?.tileInfo?.isHighTraffic ? (
-                      <p className="text-red-800 font-semibold">
-                        High traffic Area
-                      </p>
-                    ) : (
-                      <p className="text-green-800 font-semibold">
-                        Low traffic area
-                      </p>
-                    )}
+                  <span className="flex space-x-2 ">
+                    <h2 className="font-semibold">River front:</h2>
+                    <p> {selectedTile?.tileInfo?.riverFront}</p>
+                  </span>
+                  <span className="flex space-x-2 mt-10 ">
+                    <ul className="">
+                      {selectedTile?.tileInfo?.isHighTraffic ? (
+                        <li>
+                          <p className="text-red-800 font-semibold border border-red-900 p-2 rounded-xl shadow-lg">
+                            High traffic area
+                          </p>
+                        </li>
+                      ) : (
+                        <li>
+                          <p className="text-green-800 font-semibold border border-[#013220] p-2 rounded-xl shadow-lg">
+                            Low traffic area
+                          </p>
+                        </li>
+                      )}
+                    </ul>
                   </span>
                 </div>
                 <div>
@@ -322,9 +380,11 @@ const T = React.memo(() => {
                   )}
                   <div
                     onClick={() => {
-                      router.replace("/modelviewer?type=1");
+                      router.replace(
+                        `/modelviewer?model=${selectedTile?.tileInfo?.modelPath}`
+                      );
                     }}
-                    className="cursor-pointer w-full text-center p-2 mt-10 md:mt-6 md:p-3 md:px-16 bg-[#252A34] text-white rounded-lg"
+                    className="cursor-pointer w-full text-center p-2 mt-10 md:mt-6 md:p-3 md:px-16 bg-[#013220] text-white rounded-lg"
                   >
                     <button>Go in</button>
                   </div>
@@ -340,6 +400,6 @@ const T = React.memo(() => {
       </div>
     </>
   );
-});
+};
 
 export default T;

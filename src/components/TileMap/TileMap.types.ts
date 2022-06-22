@@ -44,7 +44,13 @@ export type Props = {
   /** callbacks */
   onMouseDown?: (x: number, y: number) => void;
   onMouseUp?: (x: number, y: number) => void;
-  onClick?: (tiles: any, tileInfo: object) => void;
+  onClick?: (
+    tiles: any,
+    tileInfo: object,
+    x?: number,
+    y?: number,
+    title?: string
+  ) => void;
   onHover?: (x: number, y: number) => void;
   onPopup?: (args: {
     x: number;

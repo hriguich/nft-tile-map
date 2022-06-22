@@ -9,6 +9,19 @@ import { Props, State } from "./TileMap.types";
 
 const MOBILE_WIDTH = 768;
 
+const topRiver = require("../../../selectionCoords/top.json");
+const bottomRiver = require("../../../selectionCoords/bottom.json");
+const leftRiver = require("../../../selectionCoords/left.json");
+const rightRiver = require("../../../selectionCoords/right.json");
+const sand10011 = require("../../../selectionCoords/sand10011.json");
+const sand10012 = require("../../../selectionCoords/sand10012.json");
+const sand10013 = require("../../../selectionCoords/sand10013.json");
+const sand10014 = require("../../../selectionCoords/sand10014.json");
+const sand10015 = require("../../../selectionCoords/sand10015.json");
+const sand10016 = require("../../../selectionCoords/sand10016.json");
+const sand10017 = require("../../../selectionCoords/sand10017.json");
+const sand10018 = require("../../../selectionCoords/sand10018.json");
+
 export class TileMap extends React.PureComponent<Props, State> {
   static defaultProps = {
     x: 0,
@@ -290,8 +303,46 @@ export class TileMap extends React.PureComponent<Props, State> {
           const landId = tileInfo.landId;
 
           if (type === 1 && landId != 0) {
-            onClick([{ x, y }], tileInfo);
+            let tile = {};
+            tile[`${x},${y}`] = { x, y };
+            onClick(tile, tileInfo, x, y);
             this.renderMap();
+          } else if (landId == 10001) {
+            const title = "River";
+            onClick(topRiver, tileInfo, x, y, title);
+          } else if (landId == 10021) {
+            const title = "River";
+            onClick(bottomRiver, tileInfo, x, y, title);
+          } else if (landId == 10000) {
+            const title = "River";
+            onClick(leftRiver, tileInfo, x, y, title);
+          } else if (landId == 10030) {
+            const title = "River";
+            onClick(rightRiver, tileInfo, x, y, title);
+          } else if (landId == 10011) {
+            const title = "Sand";
+            onClick(sand10011, tileInfo, x, y, title);
+          } else if (landId == 10012) {
+            const title = "Sand";
+            onClick(sand10012, tileInfo, x, y, title);
+          } else if (landId == 10013) {
+            const title = "Sand";
+            onClick(sand10013, tileInfo, x, y, title);
+          } else if (landId == 10014) {
+            const title = "Sand";
+            onClick(sand10014, tileInfo, x, y, title);
+          } else if (landId == 10015) {
+            const title = "Sand";
+            onClick(sand10015, tileInfo, x, y, title);
+          } else if (landId == 10016) {
+            const title = "Sand";
+            onClick(sand10016, tileInfo, x, y, title);
+          } else if (landId == 10017) {
+            const title = "Sand";
+            onClick(sand10017, tileInfo, x, y, title);
+          } else if (landId == 10018) {
+            const title = "Sand";
+            onClick(sand10018, tileInfo, x, y, title);
           } else {
             let topSteps = 0;
             let isTop = true;
@@ -364,21 +415,108 @@ export class TileMap extends React.PureComponent<Props, State> {
             const xCoordsCount = Array(rightSteps - leftSteps);
             const yCoordsCount = Array(topSteps - bottomSteps);
             let yTiles = [];
-            let tiles = [];
+            let tiles = {};
+
             for (let i = 0; i < yCoordsCount.length; i++) {
               yTiles.push({
                 x: rightBottomCorner.x,
                 y: rightBottomCorner.y + i,
               });
             }
+
             for (let i = 0; i < yTiles.length; i++) {
               const tile = yTiles[i];
               for (let index = 0; index < xCoordsCount.length; index++) {
-                tiles.push({ x: tile.x - index, y: tile.y });
+                // tiles.push({ x: tile.x - index, y: tile.y });
+                tiles[`${tile.x - index},${tile.y}`] = {
+                  x: tile.x - index,
+                  y: tile.y,
+                };
               }
             }
 
-            onClick(tiles, tileInfo);
+            // let correctedCorner = rightBottomCorner;
+            // let correcting = true;
+            // while (correcting) {
+            //   if (
+            //     this.props.layers[0](
+            //       rightBottomCorner.x,
+            //       rightBottomCorner.y - 1
+            //     ).top
+            //   ) {
+            //     correctedCorner = {
+            //       x: rightBottomCorner.x,
+            //       y: rightBottomCorner.y - 1,
+            //     };
+            //   } else {
+            //     correcting = false;
+            //   }
+            // }
+
+            // let currentTile = correctedCorner;
+            // let scanning = true;
+            // let goingDown = false;
+            // let checking = true;
+
+            // const goBottomAndCheckLeft = () => {
+            //   let goBottomAndCheckLeftValue = currentTile;
+            //   while (checking) {
+            //     console.log(1);
+            //     if (
+            //       this.props.layers[0](
+            //         goBottomAndCheckLeftValue.x,
+            //         goBottomAndCheckLeftValue.y - 1
+            //       ).top
+            //     ) {
+            //       goBottomAndCheckLeftValue = {
+            //         y: goBottomAndCheckLeftValue.y - 1,
+            //         x: goBottomAndCheckLeftValue.x,
+            //       };
+            //     } else {
+            //       if (
+            //         this.props.layers[0](
+            //           goBottomAndCheckLeftValue.x,
+            //           goBottomAndCheckLeftValue.y
+            //         ).left
+            //       ) {
+            //         currentTile = goBottomAndCheckLeftValue;
+            //         checking = false;
+            //       } else {
+            //         checking = false;
+            //         scanning = false;
+            //       }
+            //     }
+            //   }
+            // };
+
+            // while (scanning) {
+            //   tiles.push({ x: currentTile.x, y: currentTile.y });
+            //   if (
+            //     this.props.layers[0](currentTile.x, currentTile.y).top &&
+            //     !goingDown
+            //   ) {
+            //     currentTile = { y: currentTile.y + 1, x: currentTile.x };
+            //   } else {
+            //     if (goingDown) {
+            //       if (
+            //         this.props.layers[0](currentTile.x, currentTile.y - 1).top
+            //       ) {
+            //         currentTile = { y: currentTile.y - 1, x: currentTile.x };
+            //       } else {
+            //         goingDown = false;
+            //       }
+            //     } else {
+            //       if (this.props.layers[0](currentTile.x, currentTile.y).left) {
+            //         currentTile = { y: currentTile.y, x: currentTile.x - 1 };
+            //         goingDown = true;
+            //       } else {
+            //         scanning = false;
+            //       }
+            //     }
+            //   }
+            // }
+
+            onClick(tiles, tileInfo, x, y);
             this.renderMap();
           }
         }

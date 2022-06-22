@@ -13,7 +13,7 @@ function NavBar() {
             router.push("/");
           }}
         >
-          Homepage
+          WitLink Map
         </p>
       </div>
     </div>
