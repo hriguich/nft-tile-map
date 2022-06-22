@@ -56,7 +56,7 @@ const T = () => {
       method: "POST",
     };
 
-    const res = fetch("http://178.62.103.157/data", requestOptions)
+    const res = fetch("https://api.notiondrop.io/data", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(JSON.parse(result));

@@ -417,107 +417,49 @@ export class TileMap extends React.PureComponent<Props, State> {
             let yTiles = [];
             let tiles = {};
 
-            for (let i = 0; i < yCoordsCount.length; i++) {
-              yTiles.push({
-                x: rightBottomCorner.x,
-                y: rightBottomCorner.y + i,
-              });
-            }
-
-            for (let i = 0; i < yTiles.length; i++) {
-              const tile = yTiles[i];
-              for (let index = 0; index < xCoordsCount.length; index++) {
-                // tiles.push({ x: tile.x - index, y: tile.y });
-                tiles[`${tile.x - index},${tile.y}`] = {
-                  x: tile.x - index,
-                  y: tile.y,
-                };
+            if (type == 10 && landId == 0) {
+              for (let i = 0; i < yCoordsCount.length; i++) {
+                yTiles.push({
+                  x: rightBottomCorner.x,
+                  y: rightBottomCorner.y + i,
+                });
               }
+
+              for (let i = 0; i < yTiles.length; i++) {
+                const tile = yTiles[i];
+                for (let index = 0; index < xCoordsCount.length; index++) {
+                  // tiles.push({ x: tile.x - index, y: tile.y });
+                  tiles[`${tile.x - index},${tile.y}`] = {
+                    x: tile.x - index,
+                    y: tile.y,
+                  };
+                }
+              }
+
+              onClick(tiles, tileInfo, x, y);
+              this.renderMap();
+            } else {
+              for (let i = 0; i < yCoordsCount.length; i++) {
+                yTiles.push({
+                  x: rightBottomCorner.x,
+                  y: rightBottomCorner.y + i,
+                });
+              }
+
+              for (let i = 0; i < yTiles.length; i++) {
+                const tile = yTiles[i];
+                for (let index = 0; index < xCoordsCount.length; index++) {
+                  // tiles.push({ x: tile.x - index, y: tile.y });
+                  tiles[`${tile.x - index},${tile.y}`] = {
+                    x: tile.x - index,
+                    y: tile.y,
+                  };
+                }
+              }
+
+              onClick(tiles, tileInfo, x, y);
+              this.renderMap();
             }
-
-            // let correctedCorner = rightBottomCorner;
-            // let correcting = true;
-            // while (correcting) {
-            //   if (
-            //     this.props.layers[0](
-            //       rightBottomCorner.x,
-            //       rightBottomCorner.y - 1
-            //     ).top
-            //   ) {
-            //     correctedCorner = {
-            //       x: rightBottomCorner.x,
-            //       y: rightBottomCorner.y - 1,
-            //     };
-            //   } else {
-            //     correcting = false;
-            //   }
-            // }
-
-            // let currentTile = correctedCorner;
-            // let scanning = true;
-            // let goingDown = false;
-            // let checking = true;
-
-            // const goBottomAndCheckLeft = () => {
-            //   let goBottomAndCheckLeftValue = currentTile;
-            //   while (checking) {
-            //     console.log(1);
-            //     if (
-            //       this.props.layers[0](
-            //         goBottomAndCheckLeftValue.x,
-            //         goBottomAndCheckLeftValue.y - 1
-            //       ).top
-            //     ) {
-            //       goBottomAndCheckLeftValue = {
-            //         y: goBottomAndCheckLeftValue.y - 1,
-            //         x: goBottomAndCheckLeftValue.x,
-            //       };
-            //     } else {
-            //       if (
-            //         this.props.layers[0](
-            //           goBottomAndCheckLeftValue.x,
-            //           goBottomAndCheckLeftValue.y
-            //         ).left
-            //       ) {
-            //         currentTile = goBottomAndCheckLeftValue;
-            //         checking = false;
-            //       } else {
-            //         checking = false;
-            //         scanning = false;
-            //       }
-            //     }
-            //   }
-            // };
-
-            // while (scanning) {
-            //   tiles.push({ x: currentTile.x, y: currentTile.y });
-            //   if (
-            //     this.props.layers[0](currentTile.x, currentTile.y).top &&
-            //     !goingDown
-            //   ) {
-            //     currentTile = { y: currentTile.y + 1, x: currentTile.x };
-            //   } else {
-            //     if (goingDown) {
-            //       if (
-            //         this.props.layers[0](currentTile.x, currentTile.y - 1).top
-            //       ) {
-            //         currentTile = { y: currentTile.y - 1, x: currentTile.x };
-            //       } else {
-            //         goingDown = false;
-            //       }
-            //     } else {
-            //       if (this.props.layers[0](currentTile.x, currentTile.y).left) {
-            //         currentTile = { y: currentTile.y, x: currentTile.x - 1 };
-            //         goingDown = true;
-            //       } else {
-            //         scanning = false;
-            //       }
-            //     }
-            //   }
-            // }
-
-            onClick(tiles, tileInfo, x, y);
-            this.renderMap();
           }
         }
       }
