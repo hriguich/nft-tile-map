@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../src/components/NavBar";
 import Script from "next/script";
 import { useRouter } from "next/router";
 
