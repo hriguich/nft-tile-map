@@ -164,7 +164,7 @@ const T = () => {
       const isHighTraffic = tile.isHighTraffic;
       const billboard = tile.billboard;
       const modelPath = tile["3dfile"];
-      const riverFront = tile.riverFront;
+      const riverFront = tile.riverfront;
 
       return {
         color,
