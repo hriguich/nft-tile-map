@@ -37,9 +37,10 @@ function Modelviewer() {
               poster={`models/${path}`}
               seamless-poster
               shadow-intensity="2"
-              exposure="0.2"
+              exposure="0.3"
               camera-controls
-              environment-image="whipple_creek_regional_park_04_1k.hdr"
+              // environment-image="neutral"
+              // environment-image="whipple_creek_regional_park_04_1k.hdr"
               enable-pan
             ></model-viewer>
           )}
