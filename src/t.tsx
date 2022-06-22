@@ -29,12 +29,12 @@ const T = () => {
     if (router.query.landid && atlas) {
       if (Number(router.query.landid) <= 7000) {
         const asArray = Object.entries(atlas);
-        const filtered = asArray.filter(
-          ([key, value]) => value.landId == router.query.landid
-        );
+        const filtered = asArray.filter(([key, value]) => {
+          const i = value as any;
+          return i.landId == router.query.landid;
+        });
 
         const tiles = Object.fromEntries(filtered);
-        const tileInfo = Object.values(tiles)[0] as any;
 
         let coords;
 
@@ -55,6 +55,41 @@ const T = () => {
         }
 
         console.log(tiles);
+        const tile = atlas[`${x1},${y1}`];
+
+        const color = COLOR_BY_TYPE[tile.type];
+        const top = !!tile.top;
+        const left = !!tile.left;
+        const topLeft = !!tile.topLeft;
+        const owner = tile.owner;
+        const type = tile.type;
+        const estateId = tile.estate_id;
+        const image = tile.image;
+        const price = tile.price;
+        const landId = tile.landId;
+        const zone = tile.zone;
+        const isHighTraffic = tile.isHighTraffic;
+        const billboard = tile.billboard;
+        const modelPath = tile["3dfile"];
+        const riverFront = tile.riverfront;
+
+        const tileInfo = {
+          color,
+          top,
+          left,
+          topLeft,
+          owner,
+          type,
+          estateId,
+          price,
+          landId,
+          zone,
+          isHighTraffic,
+          billboard,
+          modelPath,
+          riverFront,
+        };
+
         setSelectedTile({ tiles, tileInfo, coords, x: x1, y: y1 });
       }
     } else if (!router.query.landid && atlas) {
@@ -412,11 +447,7 @@ const T = () => {
                             </p>
                           </li>
                         ) : (
-                          <li>
-                            <p className="text-green-800 font-semibold border border-[#013220] p-2 rounded-xl shadow-lg">
-                              Low traffic area
-                            </p>
-                          </li>
+                          ""
                         )}
                       </ul>
                     </span>
@@ -442,7 +473,7 @@ const T = () => {
                 </div>
               ) : (
                 <div className="text-[#252A34] p-16 text-center font-semibold">
-                  Selecte a Tile first
+                  Select a Witlink Land to view details
                 </div>
               )}
             </div>

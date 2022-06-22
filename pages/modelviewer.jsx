@@ -37,6 +37,7 @@ function Modelviewer() {
               poster={`models/${path}`}
               seamless-poster
               shadow-intensity="1"
+              exposure="1"
               camera-controls
               enable-pan
             ></model-viewer>
