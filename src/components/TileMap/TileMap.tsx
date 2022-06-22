@@ -689,9 +689,7 @@ export class TileMap extends React.PureComponent<Props, State> {
                         High traffic Area
                       </p>
                     ) : (
-                      <p className="text-green-800 font-semibold text-sm">
-                        Low traffic area
-                      </p>
+                      ""
                     )}
                   </p>
                 </div>
