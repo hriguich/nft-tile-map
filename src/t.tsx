@@ -6,7 +6,7 @@ const T = () => {
   const router = useRouter();
   const [atlas, setAtlas] = useState(null);
   const [selectedTile, setSelectedTile] = useState<SelectedTile>({
-    tiles: [],
+    tiles: null,
     tileInfo: {},
     coords: null,
   });
@@ -25,10 +25,49 @@ const T = () => {
   // //     : null;
   // // };
 
+  useEffect(() => {
+    if (router.query.landid && atlas) {
+      if (Number(router.query.landid) <= 7000) {
+        const asArray = Object.entries(atlas);
+        const filtered = asArray.filter(
+          ([key, value]) => value.landId == router.query.landid
+        );
+
+        const tiles = Object.fromEntries(filtered);
+        const tileInfo = Object.values(tiles)[0] as any;
+
+        let coords;
+
+        const firstCoord = Object.values(tiles)[0] as any;
+        const x1 = firstCoord.x;
+        const y1 = firstCoord.y;
+
+        if (Object.keys(tiles).length === 1) {
+          coords = `(${x1},${y1})`;
+        } else if (Object.keys(tiles).length > 1) {
+          const lastCoord = Object.values(tiles)[
+            Object.keys(tiles).length - 1
+          ] as any;
+          const x2 = lastCoord.x;
+          const y2 = lastCoord.y;
+
+          coords = `(${x1},${y1}) : (${x2},${y2})`;
+        }
+
+        console.log(tiles);
+        setSelectedTile({ tiles, tileInfo, coords, x: x1, y: y1 });
+      }
+    } else if (!router.query.landid && atlas) {
+      setSelectedTile({ tiles: {}, tileInfo: {}, coords: null });
+    }
+  }, [router, atlas]);
+
   type SelectedTile = {
     tiles;
     tileInfo;
     coords;
+    x?;
+    y?;
   };
 
   type AtlasTile = {
@@ -255,149 +294,163 @@ const T = () => {
   };
   return (
     <>
-      <div className="flex flex-col items-center ">
-        <div
-          className=" rounded-xl overflow-hidden drop-shadow-xl "
-          style={{ width: "90vw", height: "65vh" }}
-        >
-          <TileMap
-            className="atlas"
-            layers={[
-              atlasLayer,
-              onSaleLayer,
-              imagesLayer,
-              // selectedStrokeLayer,
-              // selectedFillLayer,
-              // hoverLayer,
-            ]}
-            onClick={(tiles, tileInfo, x, y, title) => {
-              console.log(x, y, selectedTile);
-              if (selectedTile?.tiles[`${x},${y}`]) {
-                setSelectedTile({ tiles: {}, tileInfo: {}, coords: null });
-              } else {
-                let coords;
-                if (title) {
-                  coords = title;
-                  setSelectedTile({ tiles, tileInfo, coords });
-                } else {
-                  if (Object.keys(tiles).length === 1) {
-                    const firstCoord = Object.values(tiles)[0] as any;
-                    const x1 = firstCoord.x;
-                    const y1 = firstCoord.y;
-
-                    coords = `(${x1},${y1})`;
-                  } else if (Object.keys(tiles).length > 1) {
-                    const firstCoord = Object.values(tiles)[0] as any;
-                    const x1 = firstCoord.x;
-                    const y1 = firstCoord.y;
-
-                    const lastCoord = Object.values(tiles)[
-                      Object.keys(tiles).length - 1
-                    ] as any;
-                    const x2 = lastCoord.x;
-                    const y2 = lastCoord.y;
-
-                    coords = `(${x1},${y1}) : (${x2},${y2})`;
-                  }
-
-                  console.log({ tiles, tileInfo });
-                  setSelectedTile({ tiles, tileInfo, coords });
-                }
+      {selectedTile.tiles ? (
+        <div className="flex flex-col items-center ">
+          <div
+            className=" rounded-xl overflow-hidden drop-shadow-xl "
+            style={{ width: "90vw", height: "65vh" }}
+          >
+            <TileMap
+              className="atlas"
+              x={
+                Object.keys(selectedTile?.tiles).length != 0
+                  ? selectedTile.x
+                  : 0
               }
-            }}
-            // onHover={(x, y) => setHover({ x, y })}
-            onPopup={(state) => {}}
-            SQUARE_BY_TYPE={SQUARE_BY_TYPE}
-          />
-        </div>
-        <div className="flex w-[85vw] ">
-          <div className=" my-10 w-full bg-white drop-shadow-md rounded-lg">
-            {Object.keys(selectedTile?.tiles).length != 0 ? (
-              <div className="m-8 flex flex-col md:flex-row justify-between">
-                <div>
-                  <span className="text-lg md:text-xl font-semibolds">
-                    {selectedTile?.coords && selectedTile?.coords}
-                  </span>
-                  <span className="flex space-x-2 mt-5">
-                    <h2 className="font-semibold">Land id:</h2>
+              y={
+                Object.keys(selectedTile?.tiles).length != 0
+                  ? selectedTile.y
+                  : 0
+              }
+              layers={[
+                atlasLayer,
+                onSaleLayer,
+                imagesLayer,
+                // selectedStrokeLayer,
+                // selectedFillLayer,
+                // hoverLayer,
+              ]}
+              onClick={(tiles, tileInfo, x, y, title) => {
+                console.log(x, y, selectedTile);
+                if (selectedTile?.tiles[`${x},${y}`]) {
+                  setSelectedTile({ tiles: {}, tileInfo: {}, coords: null });
+                } else {
+                  let coords;
+                  if (title) {
+                    coords = title;
+                    setSelectedTile({ tiles, tileInfo, coords });
+                  } else {
+                    if (Object.keys(tiles).length === 1) {
+                      const firstCoord = Object.values(tiles)[0] as any;
+                      const x1 = firstCoord.x;
+                      const y1 = firstCoord.y;
 
-                    <p> {selectedTile?.tileInfo?.landId}</p>
-                  </span>
-                  <span className="flex space-x-2">
-                    <h2 className="font-semibold">owner:</h2>
+                      coords = `(${x1},${y1})`;
+                    } else if (Object.keys(tiles).length > 1) {
+                      const firstCoord = Object.values(tiles)[0] as any;
+                      const x1 = firstCoord.x;
+                      const y1 = firstCoord.y;
 
-                    <p> {selectedTile?.tileInfo?.owner}</p>
-                  </span>
-                  <span className="flex space-x-2 ">
-                    <h2 className="font-semibold">Type:</h2>
-                    {selectedTile?.tileInfo?.type == 1 &&
-                    selectedTile?.tileInfo?.landId == 0 ? (
-                      <p> Road</p>
-                    ) : (
-                      <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
-                    )}
-                  </span>
-                  <span className="flex space-x-2 ">
-                    <h2 className="font-semibold">Square meters:</h2>
-                    <p> {SQUARE_BY_TYPE[selectedTile?.tileInfo?.type]}</p>
-                  </span>
-                  <span className="flex space-x-2 ">
-                    <h2 className="font-semibold">Zone:</h2>
-                    <p> {selectedTile?.tileInfo?.zone}</p>
-                  </span>
-                  <span className="flex space-x-2 ">
-                    <h2 className="font-semibold">Billboard:</h2>
-                    <p> {selectedTile?.tileInfo?.billboard}</p>
-                  </span>
-                  <span className="flex space-x-2 ">
-                    <h2 className="font-semibold">River front:</h2>
-                    <p> {selectedTile?.tileInfo?.riverFront}</p>
-                  </span>
-                  <span className="flex space-x-2 mt-10 ">
-                    <ul className="">
-                      {selectedTile?.tileInfo?.isHighTraffic ? (
-                        <li>
-                          <p className="text-red-800 font-semibold border border-red-900 p-2 rounded-xl shadow-lg">
-                            High traffic area
-                          </p>
-                        </li>
-                      ) : (
-                        <li>
-                          <p className="text-green-800 font-semibold border border-[#013220] p-2 rounded-xl shadow-lg">
-                            Low traffic area
-                          </p>
-                        </li>
-                      )}
-                    </ul>
-                  </span>
-                </div>
-                <div>
-                  {selectedTile?.tileInfo?.price && (
-                    <span className="flex flex-col justify-center items-center">
-                      <h2 className="font-semibold text-lg">Price</h2>
-                      <p> {selectedTile?.tileInfo?.price} </p>
+                      const lastCoord = Object.values(tiles)[
+                        Object.keys(tiles).length - 1
+                      ] as any;
+                      const x2 = lastCoord.x;
+                      const y2 = lastCoord.y;
+
+                      coords = `(${x1},${y1}) : (${x2},${y2})`;
+                    }
+
+                    console.log({ tiles, tileInfo });
+                    setSelectedTile({ tiles, tileInfo, coords });
+                  }
+                }
+              }}
+              // onHover={(x, y) => setHover({ x, y })}
+              onPopup={(state) => {}}
+              SQUARE_BY_TYPE={SQUARE_BY_TYPE}
+            />
+          </div>
+          <div className="flex w-[85vw] ">
+            <div className=" my-10 w-full bg-white drop-shadow-md rounded-lg">
+              {Object.keys(selectedTile?.tiles).length != 0 ? (
+                <div className="m-8 flex flex-col md:flex-row justify-between">
+                  <div>
+                    <span className="text-lg md:text-xl font-semibolds">
+                      {selectedTile?.coords && selectedTile?.coords}
                     </span>
-                  )}
-                  <div
-                    onClick={() => {
-                      router.replace(
-                        `/modelviewer?model=${selectedTile?.tileInfo?.modelPath}`
-                      );
-                    }}
-                    className="cursor-pointer w-full text-center p-2 mt-10 md:mt-6 md:p-3 md:px-16 bg-[#013220] text-white rounded-lg"
-                  >
-                    <button>Go in</button>
+                    <span className="flex space-x-2 mt-5">
+                      <h2 className="font-semibold">Land id:</h2>
+
+                      <p> {selectedTile?.tileInfo?.landId}</p>
+                    </span>
+                    <span className="flex space-x-2">
+                      <h2 className="font-semibold">owner:</h2>
+
+                      <p> {selectedTile?.tileInfo?.owner}</p>
+                    </span>
+                    <span className="flex space-x-2 ">
+                      <h2 className="font-semibold">Type:</h2>
+                      {selectedTile?.tileInfo?.type == 1 &&
+                      selectedTile?.tileInfo?.landId == 0 ? (
+                        <p> Road</p>
+                      ) : (
+                        <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
+                      )}
+                    </span>
+                    <span className="flex space-x-2 ">
+                      <h2 className="font-semibold">Square meters:</h2>
+                      <p> {SQUARE_BY_TYPE[selectedTile?.tileInfo?.type]}</p>
+                    </span>
+                    <span className="flex space-x-2 ">
+                      <h2 className="font-semibold">Zone:</h2>
+                      <p> {selectedTile?.tileInfo?.zone}</p>
+                    </span>
+                    <span className="flex space-x-2 ">
+                      <h2 className="font-semibold">Billboard:</h2>
+                      <p> {selectedTile?.tileInfo?.billboard}</p>
+                    </span>
+                    <span className="flex space-x-2 ">
+                      <h2 className="font-semibold">River front:</h2>
+                      <p> {selectedTile?.tileInfo?.riverFront}</p>
+                    </span>
+                    <span className="flex space-x-2 mt-10 ">
+                      <ul className="">
+                        {selectedTile?.tileInfo?.isHighTraffic ? (
+                          <li>
+                            <p className="text-red-800 font-semibold border border-red-900 p-2 rounded-xl shadow-lg">
+                              High traffic area
+                            </p>
+                          </li>
+                        ) : (
+                          <li>
+                            <p className="text-green-800 font-semibold border border-[#013220] p-2 rounded-xl shadow-lg">
+                              Low traffic area
+                            </p>
+                          </li>
+                        )}
+                      </ul>
+                    </span>
+                  </div>
+                  <div>
+                    {selectedTile?.tileInfo?.price && (
+                      <span className="flex flex-col justify-center items-center">
+                        <h2 className="font-semibold text-lg">Price</h2>
+                        <p> {selectedTile?.tileInfo?.price} </p>
+                      </span>
+                    )}
+                    <div
+                      onClick={() => {
+                        router.replace(
+                          `/modelviewer?model=${selectedTile?.tileInfo?.modelPath}`
+                        );
+                      }}
+                      className="cursor-pointer w-full text-center p-2 mt-10 md:mt-6 md:p-3 md:px-16 bg-[#013220] text-white rounded-lg"
+                    >
+                      <button>Go in</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="text-[#252A34] p-16 text-center font-semibold">
-                Selecte a Tile first
-              </div>
-            )}
+              ) : (
+                <div className="text-[#252A34] p-16 text-center font-semibold">
+                  Selecte a Tile first
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };
