@@ -15,6 +15,14 @@ function NavBar() {
         >
           WitLink Map
         </p>
+        <p
+          className="ml-5 cursor-pointer text-sm font-semibold"
+          onClick={() => {
+            router.push("https://witlink.ai/");
+          }}
+        >
+          WitLink.ai
+        </p>
       </div>
     </div>
   );

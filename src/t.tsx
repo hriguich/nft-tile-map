@@ -54,7 +54,6 @@ const T = () => {
           coords = `(${x1},${y1}) : (${x2},${y2})`;
         }
 
-        console.log(tiles);
         const tile = atlas[`${x1},${y1}`];
 
         const color = COLOR_BY_TYPE[tile.type];
@@ -133,7 +132,6 @@ const T = () => {
     const res = fetch("https://api.notiondrop.io/map", requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        console.log(JSON.parse(result));
         return JSON.parse(result);
       })
       .catch((error) => console.log("error", error));
@@ -141,7 +139,6 @@ const T = () => {
     const config = require("../data.json");
     // const resp = await fetch("https://api.decentraland.org/v1/tiles");
     const json = await res;
-    console.log(json.data);
     setAtlas(json.data);
   }
 
@@ -204,10 +201,6 @@ const T = () => {
 
   let selected = [];
 
-  // useEffect(() => {
-  //   console.log(context);
-  // }, [context]);
-
   function isSelected(x: number, y: number) {
     return selectedTile?.tiles?.some((coord) => coord.x === x && coord.y === y);
   }
@@ -217,7 +210,6 @@ const T = () => {
     if (atlas !== null && id in atlas) {
       const tile = atlas[id];
       let color;
-      // console.log(selectedTile?.tiles[id]);
 
       if (selectedTile?.tiles[id]) {
         color = "#ff9990";
@@ -324,7 +316,6 @@ const T = () => {
   };
 
   const selectedFillLayer: Layer = (x, y) => {
-    // console.log("re");
     return isSelected(x, y) ? { color: "#ff9990", scale: 1.4 } : null;
   };
   return (
@@ -356,7 +347,6 @@ const T = () => {
                 // hoverLayer,
               ]}
               onClick={(tiles, tileInfo, x, y, title) => {
-                console.log(x, y, selectedTile);
                 if (selectedTile?.tiles[`${x},${y}`]) {
                   setSelectedTile({ tiles: {}, tileInfo: {}, coords: null });
                 } else {
@@ -385,7 +375,6 @@ const T = () => {
                       coords = `(${x1},${y1}) : (${x2},${y2})`;
                     }
 
-                    console.log({ tiles, tileInfo });
                     setSelectedTile({ tiles, tileInfo, coords });
                   }
                 }
@@ -418,6 +407,8 @@ const T = () => {
                       {selectedTile?.tileInfo?.type == 1 &&
                       selectedTile?.tileInfo?.landId == 0 ? (
                         <p> Road</p>
+                      ) : selectedTile?.tileInfo?.landId == 6764 ? (
+                        <p>Emporium</p>
                       ) : (
                         <p> {STRING_TYPE[selectedTile?.tileInfo?.type]}</p>
                       )}

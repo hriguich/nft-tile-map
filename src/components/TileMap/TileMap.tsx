@@ -182,14 +182,9 @@ export class TileMap extends React.PureComponent<Props, State> {
     props: { width: number; height: number; padding: number },
     state: { pan: Coord; center: Coord; zoom: number; size: number }
   ): State {
-    // const tile_sheet = new Image();
-
-    // tile_sheet.src =
-    //   "https://www.industrialempathy.com/img/remote/ZiClJf-640w.avif";
     const { width, height, padding } = props;
     const { pan, zoom, center, size } = state;
     const image = null;
-    // console.log(image);
     const viewport = getViewport({
       width,
       height,
@@ -417,31 +412,6 @@ export class TileMap extends React.PureComponent<Props, State> {
             let yTiles = [];
             let tiles = {};
 
-            // if (type == 10 && landId == 0) {
-            // let dir = null
-            // let currentRoad = {x,y}
-            // if(  this.props.layers[0](
-            //         x,
-            //       y
-            //       ).left){
-            //         dir = "x"
-            //       }
-            //       while (dir) {
-            //         if(dir === "x" ){
-            //           tiles[`${currentRoad.x},${currentRoad.y}`] = {
-            //             x: currentRoad.x ,
-            //             y: currentRoad.y,
-            //           };}
-            //           if(this.props.layers[0](){
-
-            //         }else{
-
-            //         }
-            //       }
-
-            //   onClick(tiles, tileInfo, x, y);
-            //   this.renderMap();
-            // } else {
             for (let i = 0; i < yCoordsCount.length; i++) {
               yTiles.push({
                 x: rightBottomCorner.x,
@@ -452,7 +422,6 @@ export class TileMap extends React.PureComponent<Props, State> {
             for (let i = 0; i < yTiles.length; i++) {
               const tile = yTiles[i];
               for (let index = 0; index < xCoordsCount.length; index++) {
-                // tiles.push({ x: tile.x - index, y: tile.y });
                 tiles[`${tile.x - index},${tile.y}`] = {
                   x: tile.x - index,
                   y: tile.y,
@@ -462,7 +431,6 @@ export class TileMap extends React.PureComponent<Props, State> {
 
             onClick(tiles, tileInfo, x, y);
             this.renderMap();
-            // }
           }
         }
       }
