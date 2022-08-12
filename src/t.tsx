@@ -139,7 +139,7 @@ const T = () => {
     const config = require("../data.json");
     // const resp = await fetch("https://api.decentraland.org/v1/tiles");
     const json = await res;
-    setAtlas(json.data);
+    setAtlas(config.data);
   }
 
   useEffect(() => {
